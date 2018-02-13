@@ -17,12 +17,10 @@ Includes GTest powered unit tests
    `cmake --build .`  
 
 ## Requirements:
-+ A compiler with some C++ 17 support (at least <string_view>)
-
++ A compiler with some C++ 17 support (at least <string_view>)  
     Tested on VS 2017 15.5 and GCC 7.1 
 
 + CMake 3.10 or above
 
-+ Boost
-
++ Boost  
     Tested GCC with v1.58, MSVC with v1.66 
