@@ -4,8 +4,14 @@ CMake project that uses Boost Spirit to parse Wavefront Obj model files
 Includes GTest powered unit tests  
 
 ## Building:
-+ Install Boost on your system
-+ On Windows run the provided build.bat file   
++ Install Boost on your system  
+e.g. `vcpkg install boost`  
+or  
+`sudo apt-get install libboost-all-dev`  
++ On Windows run the provided `build.bat` file   
+   Note: the file `build-generate.bat` currently contains a hardcoded path: `set VCPKG_PATH="S:\tools\vcpkg\\"`  
+   Either change the path to point to your vcpkg installation or remove usages of the path if not using vcpkg.  
+   
 + Or type the following commands:  
    `mkdir build && cd build`  
    
