@@ -6,7 +6,6 @@
 
 :: Configuration variables. You may edit these.
 set BUILD_TARGET="Debug"
-set VCPKG_PATH="S:\tools\vcpkg\\"
 
 
 ::##############################################################################

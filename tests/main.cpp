@@ -17,12 +17,12 @@ TEST_F(TestFixture, WithFixture) {
 }
 
 //------------------------------------------------------------------------------
-TEST(Test, WithoutFixture) {
-	MyLibrary lib;
-
-	EXPECT_EQ(2, lib.x);
-	EXPECT_EQ(3, lib.y);
-	EXPECT_EQ(10, lib.z());
-}
+//TEST(Test, WithoutFixture) {
+//	MyLibrary lib;
+//
+//	EXPECT_EQ(2, lib.x);
+//	EXPECT_EQ(3, lib.y);
+//	EXPECT_EQ(10, lib.z());
+//}
 
 //------------------------------------------------------------------------------
