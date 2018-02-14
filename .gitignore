@@ -11,6 +11,7 @@
 *.userprefs
 
 # Build results
+[Gg]ccbuild/
 [Bb]uild/
 [Dd]ebug/
 [Dd]ebugPublic/
