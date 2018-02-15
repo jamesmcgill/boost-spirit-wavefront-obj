@@ -17,18 +17,21 @@ target_compile_features(ObjLoader PUBLIC cxx_std_17)
 add_executable(ObjLoaderMain source/main.cpp source/fmt/format.cc)
 target_link_libraries(ObjLoaderMain ObjLoader)
 target_compile_features(ObjLoaderMain PUBLIC cxx_std_17)
-set_target_properties(ObjLoaderMain PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+set_target_properties(ObjLoaderMain PROPERTIES
+  VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_command(TARGET ObjLoaderMain POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_SOURCE_DIR}/assets"
     "$<TARGET_FILE_DIR:ObjLoaderMain>/assets")
 
-# GTest
+# GTest + GMock
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 enable_testing()
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest")
+target_include_directories(gmock_main SYSTEM BEFORE INTERFACE
+  "${gtest_SOURCE_DIR}/include" "${gmock_SOURCE_DIR}/include")
 
 # Tests
 add_executable(tests tests/main.cpp)
-target_link_libraries(tests gtest gtest_main ObjLoader)
+target_link_libraries(tests gmock_main ObjLoader)
 add_test(AllTests tests)

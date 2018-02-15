@@ -32,6 +32,11 @@ struct VertexPosition
     return os << "v(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w
               << ")";
   }
+
+  friend bool operator==(const VertexPosition& lhs, const VertexPosition& rhs)
+  {
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+  }
 };
 
 //------------------------------------------------------------------------------
@@ -44,6 +49,11 @@ struct VertexNormal
   friend std::ostream& operator<<(std::ostream& os, const VertexNormal& v)
   {
     return os << "n(" << v.i << ", " << v.j << ", " << v.k << ")";
+  }
+
+  friend bool operator==(const VertexNormal& lhs, const VertexNormal& rhs)
+  {
+    return lhs.i == rhs.i && lhs.j == rhs.j && lhs.k == rhs.k;
   }
 };
 
@@ -59,6 +69,12 @@ struct VertexTextureCoordinate
   {
     return os << "uv(" << v.u << ", " << v.v << ", " << v.w << ")";
   }
+
+  friend bool operator==(
+    const VertexTextureCoordinate& lhs, const VertexTextureCoordinate& rhs)
+  {
+    return lhs.u == rhs.u && lhs.v == rhs.v && lhs.w == rhs.w;
+  }
 };
 
 //------------------------------------------------------------------------------
@@ -72,6 +88,12 @@ struct FaceTriplet
   {
     return os << "(" << f.vertexIndex << ", " << f.uvIndex << ", "
               << f.normalIndex << ") ";
+  }
+
+  friend bool operator==(const FaceTriplet& lhs, const FaceTriplet& rhs)
+  {
+    return lhs.vertexIndex == rhs.vertexIndex && lhs.uvIndex == rhs.uvIndex
+           && lhs.normalIndex == rhs.normalIndex;
   }
 };
 
