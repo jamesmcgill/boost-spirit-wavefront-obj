@@ -5,7 +5,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "Log.h"
+#include "log.h"
 #include "fmt/format.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -223,6 +223,53 @@ main()
     else
     {
       printFailure("TINYOBJ");
+    }
+  }
+
+  std::string TEST_STRING = R"obj(
+v  0.03264300152659416 0.056147500872612 -0.04995829984545708
+v  0.03080499917268753 0.0559782013297081 -0.04991229996085167 1.5
+v  0.03251679986715317 0.05801349878311157 -0.050050999969244
+vn -0.4538693428039551 0.3681831955909729 0.8114454746246338
+vn -0.15167635679245 0.9458057284355164 -0.2871338427066803
+v  0.03264300152659416 0.056147500872612 -0.04995829984545708
+v  0.03080499917268753 0.0559782013297081 -0.04991229996085167
+vt 0.089608 0.023837
+vt -0.07313 0.023837
+
+# Mesh '' with 47794 faces
+usemtl $Material_0
+f  1//1 2//2 3//3
+f  4//4 3//3 2//2
+f  11/11/11 12/12/12 2/2/2
+f  5//5 1//1 6//6
+f  5 1 6
+f  1//1 3//3 6//6
+f  8/8 6/6 9/9
+f  10//10 8//8 9//9
+)obj";
+
+  {
+    auto start = std::chrono::high_resolution_clock::now();
+    if (
+      auto data
+      = ObjParser::parseAsVariant(TEST_STRING.begin(), TEST_STRING.end()))
+    {
+      auto elapsed = std::chrono::high_resolution_clock::now() - start;
+      printVariant(*data);
+      printSuccess("VARIANT", elapsed.count());
+    }
+  }
+
+  {
+    auto start = std::chrono::high_resolution_clock::now();
+    if (
+      auto data
+      = ObjParser::parseAsAggregate(TEST_STRING.begin(), TEST_STRING.end()))
+    {
+      auto elapsed = std::chrono::high_resolution_clock::now() - start;
+      printAggregate(*data);
+      printSuccess("AGGREGATE", elapsed.count());
     }
   }
 

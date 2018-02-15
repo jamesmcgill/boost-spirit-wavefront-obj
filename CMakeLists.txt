@@ -14,7 +14,7 @@ add_library(ObjLoader source/lib.cpp)
 target_compile_features(ObjLoader PUBLIC cxx_std_17)
 
 # Executable
-add_executable(ObjLoaderMain source/main.cpp source/Log.cpp source/fmt/format.cc)
+add_executable(ObjLoaderMain source/main.cpp source/fmt/format.cc)
 target_link_libraries(ObjLoaderMain ObjLoader)
 target_compile_features(ObjLoaderMain PUBLIC cxx_std_17)
 set_target_properties(ObjLoaderMain PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
