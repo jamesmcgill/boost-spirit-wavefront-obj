@@ -127,10 +127,10 @@ template <
   typename Data,
   typename Iterator,
   typename Skipper = SkipParser<Iterator>>
-struct obj_parser_variant : qi::grammar<Iterator, Data(), Skipper>
+struct ObjParserCommon : public qi::grammar<Iterator, Data(), Skipper>
 {
-  obj_parser_variant()
-      : obj_parser_variant::base_type(start)
+  ObjParserCommon()
+      : ObjParserCommon::base_type(start)
   {
     using qi::double_;
     using qi::int_;
@@ -142,8 +142,6 @@ struct obj_parser_variant : qi::grammar<Iterator, Data(), Skipper>
     faceDuo     = int_ >> -('/' >> int_);
     faceTriplet = int_ >> '/' >> -(int_) >> '/' >> int_;
     face        = 'f' >> +(faceTriplet | faceDuo);
-
-    start = *(position | normal | texCoord | face);
   }
 
   qi::rule<Iterator, VertexPosition(), Skipper> position;
@@ -161,53 +159,46 @@ struct obj_parser_variant : qi::grammar<Iterator, Data(), Skipper>
 template <
   typename Data,
   typename Iterator,
-  typename Skipper = SkipParser<Iterator>>
-struct obj_parser : qi::grammar<Iterator, Data(), Skipper>
+  typename Skipper = SkipParser<Iterator>,
+  typename Common  = ObjParserCommon<Data, Iterator, Skipper>>
+struct ObjParserVariant : public Common
 {
-  obj_parser()
-      : obj_parser::base_type(start)
+  ObjParserVariant()
+  {
+    Common::start
+      = *(Common::position | Common::normal | Common::texCoord | Common::face);
+  }
+};
+
+//------------------------------------------------------------------------------
+template <
+  typename Data,
+  typename Iterator,
+  typename Skipper = SkipParser<Iterator>,
+  typename Common  = ObjParserCommon<Data, Iterator, Skipper>>
+struct ObjParserSemanticActions : public Common
+{
+  ObjParserSemanticActions()
   {
     using phoenix::bind;
     using phoenix::push_back;
     using qi::_1;
     using qi::_val;
-    using qi::double_;
-    using qi::int_;
 
     auto _positions = bind(&Data::positions, _val);
     auto _normals   = bind(&Data::normals, _val);
     auto _texCoords = bind(&Data::texCoords, _val);
     auto _faces     = bind(&Data::faces, _val);
 
-    position = 'v' >> double_ >> double_ >> double_ >> -(double_);
-    normal   = "vn" >> double_ >> double_ >> double_;
-    texCoord = "vt" >> double_ >> -(double_) >> -(double_);
-
-    faceDuo     = int_ >> -('/' >> int_);
-    faceTriplet = int_ >> '/' >> -(int_) >> '/' >> int_;
-    face        = 'f' >> +(faceTriplet | faceDuo);
-
     // clang-format off
-    start = *(
-      position      [push_back(_positions, _1)]
-      | normal      [push_back(_normals, _1)]
-      | texCoord    [push_back(_texCoords, _1)]
-      | face        [push_back(_faces, _1)]
+    Common::start = *(
+      Common::position      [push_back(_positions, _1)]
+      | Common::normal      [push_back(_normals, _1)]
+      | Common::texCoord    [push_back(_texCoords, _1)]
+      | Common::face        [push_back(_faces, _1)]
     );
     // clang-format on
-
-    BOOST_SPIRIT_DEBUG_NODE(start);
   }
-
-  qi::rule<Iterator, VertexPosition(), Skipper> position;
-  qi::rule<Iterator, VertexNormal(), Skipper> normal;
-  qi::rule<Iterator, VertexTextureCoordinate(), Skipper> texCoord;
-
-  qi::rule<Iterator, FaceTriplet(), Skipper> faceDuo;
-  qi::rule<Iterator, FaceTriplet(), Skipper> faceTriplet;
-  qi::rule<Iterator, Face(), Skipper> face;
-
-  qi::rule<Iterator, Data(), Skipper> start;
 };
 
 //------------------------------------------------------------------------------
@@ -274,7 +265,7 @@ loadAsVariant(const std::string& filename)
 {
   using It     = boost::spirit::istream_iterator;
   using Data   = ObjVariantVec;
-  using Parser = ObjParser::obj_parser_variant<Data, It>;
+  using Parser = ObjParser::ObjParserVariant<Data, It>;
 
   return loadAndParseImpl<Parser, Data, It>(filename);
 }
@@ -285,7 +276,7 @@ loadAsAggregate(const std::string& filename)
 {
   using It     = boost::spirit::istream_iterator;
   using Data   = ObjAggregate;
-  using Parser = ObjParser::obj_parser<Data, It>;
+  using Parser = ObjParser::ObjParserSemanticActions<Data, It>;
 
   return loadAndParseImpl<Parser, Data, It>(filename);
 }

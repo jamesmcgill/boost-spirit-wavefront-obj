@@ -12,10 +12,10 @@
 #include <windows.h>    // OutputDebugStringA, _ASSERTE
 #else
 #include <assert.h>
-#include <iostream>
 #include <chrono>
 #endif
 
+#include <iostream>
 #include <cstdio>
 #include <unordered_map>
 #include <vector>
@@ -120,9 +120,9 @@ namespace logger
 static const size_t BUFFER_SIZE = 12 * 1024;
 static char buffer[BUFFER_SIZE];
 
- template <typename... Args>
- static void
- logMsgImp(
+template <typename... Args>
+static void
+logMsgImp(
   const char* level,
   const char* fmt,
   const char* file,
@@ -156,10 +156,10 @@ static char buffer[BUFFER_SIZE];
   count = std::snprintf(buffer + startIdx, BUFFER_SIZE - startIdx, "\n");
   ASSERT(count >= 0);
 
-#ifdef _WIN32
-  OutputDebugStringA(buffer);
-#else
   std::cout << buffer;
+
+#if defined(_WIN32) && defined(_DEBUG)
+  OutputDebugStringA(buffer);
 #endif
 }
 
@@ -317,8 +317,13 @@ createTimedRecordHash(const std::string_view& filePath, const int lineNumber);
 // clang-format off
 
 //------------------------------------------------------------------------------
+#ifdef _WIN32
+#define __FILENAME__ \
+  (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#else
 #define __FILENAME__ \
   (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#endif
 
 #define CONCAT_IMPL(x, y) x ## y
 #define CAT(x, y) CONCAT_IMPL(x, y)
