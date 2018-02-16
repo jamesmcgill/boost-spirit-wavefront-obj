@@ -2,15 +2,12 @@ image:
   - Visual Studio 2017
 configuration:
   - Debug
-
 clone_folder: c:\projects\source
 build_script:
   - mkdir build
   - cd build
   - cmake .. -G "Visual Studio 15 2017" -DBOOST_ROOT="C:\Libraries\boost_1_65_1"
-  - cmake --build . --config "%CONFIGURATION%"
+  - cmake --build . --config "Debug"
 
 test_script:
-  - echo %APPVEYOR_BUILD_FOLDER%
-  - echo %CONFIGURATION%
   - c:\projects\source\build\debug\tests.exe
