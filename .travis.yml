@@ -22,11 +22,11 @@ addons:
     # List of whitelisted in travis apt-sources:
     #   https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     sources:
+    - boost-latest
     - ubuntu-toolchain-r-test
-    - debian-sid
     packages:
     - g++-7
-    - libboost1.63-all-dev
+    - libboost1.55-all-dev
     - cmake
 
 notifications:
