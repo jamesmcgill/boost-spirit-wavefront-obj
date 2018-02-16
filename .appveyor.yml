@@ -9,5 +9,8 @@ build_script:
   - cd build
   - cmake .. -G "Visual Studio 15 2017" -DBOOST_ROOT="C:\Libraries\boost_1_65_1"
   - cmake --build . --config "%CONFIGURATION%"
+
 test_script:
-  - '%APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\tests.exe'
+  - echo %APPVEYOR_BUILD_FOLDER%
+  - echo %CONFIGURATION%
+  - %APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\tests.exe
