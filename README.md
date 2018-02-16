@@ -1,5 +1,7 @@
 # boost-spirit-wavefront-obj
 
+[![Build Status](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj.svg?branch=master)](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj)  
+
 CMake project that uses Boost Spirit to parse Wavefront Obj model files  
 Includes GTest powered unit tests  
 
