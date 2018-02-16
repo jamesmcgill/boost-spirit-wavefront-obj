@@ -10,7 +10,8 @@ language: cpp
 compiler: gcc
 
 script:
-  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
+  - mkdir build && cd build
+  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake ..
   - cmake --build .
 
 # For sudo=false builds this section installs the necessary dependencies.
@@ -22,9 +23,11 @@ addons:
     #   https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     sources:
     - ubuntu-toolchain-r-test
+    - boost-latest
     packages:
     - g++-7
-    - libboost-all-dev
+    - libboost1.58-all-dev
+    - cmake
 
 notifications:
   email: false
