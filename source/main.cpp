@@ -1,4 +1,4 @@
-#include "lib.h"
+#include "ObjParser.h"
 
 #include <boost/variant.hpp>
 #include <sstream>
