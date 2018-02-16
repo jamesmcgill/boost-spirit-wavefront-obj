@@ -4,7 +4,6 @@
 #include "gtest/gtest.h"
 
 #include "TestFixture.h"
-#include <iostream>
 
 //------------------------------------------------------------------------------
 int
@@ -21,31 +20,14 @@ TEST_F(TestFixture, SingleSimpleVertex)
 v  0.03264300152659416 0.056147500872612 -0.04995829984545708
 )obj";
 
-  const ObjParser::VertexPosition expected{
-    0.03264300152659416, 0.056147500872612, -0.04995829984545708};
+  const std::vector<ObjParser::VertexPosition> expected
+    = {{0.03264300152659416, 0.056147500872612, -0.04995829984545708}};
 
-  {
-    auto data = ObjParser::parseAsVariant(
-      VERTEX_SIMPLE_SINGLE.begin(), VERTEX_SIMPLE_SINGLE.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  ObjParser::ObjAggregate agg;
+  agg.positions = expected;
 
-    ASSERT_EQ(1u, data->size());
-    ASSERT_EQ(typeid(ObjParser::VertexPosition), data->front().type())
-      << "Expected VertexPosition type";
-
-    const auto& v = boost::get<ObjParser::VertexPosition>(data->front());
-    EXPECT_EQ(expected, v);
-  }
-
-  {
-    auto data = ObjParser::parseAsAggregate(
-      VERTEX_SIMPLE_SINGLE.begin(), VERTEX_SIMPLE_SINGLE.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(1u, data->positions.size());
-    const auto& v = data->positions.front();
-    EXPECT_EQ(expected, v);
-  }
+  performTestVariant(VERTEX_SIMPLE_SINGLE, expected);
+  performTestAggregate(VERTEX_SIMPLE_SINGLE, agg);
 }
 
 //------------------------------------------------------------------------------
@@ -66,35 +48,11 @@ v  0.03080499917268753 0.0559782013297081 -0.04991229996085167
     {0.03264300152659416f, 0.056147500872612f, -0.04995829984545708f, 1.0f},
     {0.03080499917268753f, 0.0559782013297081f, -0.04991229996085167f, 1.0f}};
 
-  {
-    auto data = ObjParser::parseAsVariant(
-      VERTEX_SIMPLE_LIST.begin(), VERTEX_SIMPLE_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  ObjParser::ObjAggregate agg;
+  agg.positions = expected;
 
-    ASSERT_EQ(expected.size(), data->size());
-    int i = 0;
-    for (auto& e : *data)
-    {
-      ASSERT_EQ(typeid(ObjParser::VertexPosition), e.type())
-        << "Expected VertexPosition type";
-
-      const auto& v = boost::get<ObjParser::VertexPosition>(e);
-      EXPECT_EQ(expected[i++], v);
-    }
-  }
-
-  {
-    auto data = ObjParser::parseAsAggregate(
-      VERTEX_SIMPLE_LIST.begin(), VERTEX_SIMPLE_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(expected.size(), data->positions.size());
-    int i = 0;
-    for (auto& actual : data->positions)
-    {
-      EXPECT_EQ(expected[i++], actual);
-    }
-  }
+  performTestVariant(VERTEX_SIMPLE_LIST, expected);
+  performTestAggregate(VERTEX_SIMPLE_LIST, agg);
 }
 
 //------------------------------------------------------------------------------
@@ -111,35 +69,11 @@ vn  0.03080499917268753 0.0559782013297081 -0.04991229996085167
        {-0.15167635679245f, 0.9458057284355164f, -0.2871338427066803f},
        {0.03080499917268753f, 0.0559782013297081f, -0.04991229996085167f}};
 
-  {
-    auto data
-      = ObjParser::parseAsVariant(NORMALS_LIST.begin(), NORMALS_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  ObjParser::ObjAggregate agg;
+  agg.normals = expected;
 
-    ASSERT_EQ(expected.size(), data->size());
-    int i = 0;
-    for (auto& e : *data)
-    {
-      ASSERT_EQ(typeid(ObjParser::VertexNormal), e.type())
-        << "Expected VertexNormal type";
-
-      const auto& v = boost::get<ObjParser::VertexNormal>(e);
-      EXPECT_EQ(expected[i++], v);
-    }
-  }
-
-  {
-    auto data
-      = ObjParser::parseAsAggregate(NORMALS_LIST.begin(), NORMALS_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(expected.size(), data->normals.size());
-    int i = 0;
-    for (auto& actual : data->normals)
-    {
-      EXPECT_EQ(expected[i++], actual);
-    }
-  }
+  performTestVariant(NORMALS_LIST, expected);
+  performTestAggregate(NORMALS_LIST, agg);
 }
 //------------------------------------------------------------------------------
 TEST_F(TestFixture, UVList)
@@ -159,33 +93,11 @@ vt 0.5 0.5 0.5
        {0.987654f, 0.246802f, 0.123456f},
        {0.5f, 0.5f, 0.5f}};
 
-  {
-    auto data = ObjParser::parseAsVariant(UV_LIST.begin(), UV_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  ObjParser::ObjAggregate agg;
+  agg.texCoords = expected;
 
-    ASSERT_EQ(expected.size(), data->size());
-    int i = 0;
-    for (auto& e : *data)
-    {
-      ASSERT_EQ(typeid(ObjParser::VertexTextureCoordinate), e.type())
-        << "Expected VertexNormal type";
-
-      const auto& v = boost::get<ObjParser::VertexTextureCoordinate>(e);
-      EXPECT_EQ(expected[i++], v);
-    }
-  }
-
-  {
-    auto data = ObjParser::parseAsAggregate(UV_LIST.begin(), UV_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(expected.size(), data->texCoords.size());
-    int i = 0;
-    for (auto& actual : data->texCoords)
-    {
-      EXPECT_EQ(expected[i++], actual);
-    }
-  }
+  performTestVariant(UV_LIST, expected);
+  performTestAggregate(UV_LIST, agg);
 }
 
 //------------------------------------------------------------------------------
@@ -205,33 +117,11 @@ f  11/11/11 12/12/12 2/2/2
     {{11, 11, 11}, {12, 12, 12}, {2, 2, 2}},
   };
 
-  {
-    auto data = ObjParser::parseAsVariant(FACE_LIST.begin(), FACE_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  ObjParser::ObjAggregate agg;
+  agg.faces = expected;
 
-    ASSERT_EQ(expected.size(), data->size());
-    int i = 0;
-    for (auto& e : *data)
-    {
-      ASSERT_EQ(typeid(ObjParser::Face), e.type())
-        << "Expected VertexNormal type";
-
-      const auto& v = boost::get<ObjParser::Face>(e);
-      EXPECT_EQ(expected[i++], v);
-    }
-  }
-
-  {
-    auto data = ObjParser::parseAsAggregate(FACE_LIST.begin(), FACE_LIST.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(expected.size(), data->faces.size());
-    int i = 0;
-    for (auto& actual : data->faces)
-    {
-      EXPECT_EQ(expected[i++], actual);
-    }
-  }
+  performTestVariant(FACE_LIST, expected);
+  performTestAggregate(FACE_LIST, agg);
 }
 //------------------------------------------------------------------------------
 TEST_F(TestFixture, AllFeatures)
@@ -281,62 +171,26 @@ f  8/8 6/6 9/9
     {{8, 8, 0}, {6, 6, 0}, {9, 9, 0}},
   };
 
+  // Variant Test
   ObjParser::ObjVariantVec expVariant;
   expVariant.insert(expVariant.end(), expVerts.begin(), expVerts.begin() + 3);
   expVariant.insert(expVariant.end(), expNormals.begin(), expNormals.end());
   expVariant.insert(expVariant.end(), expVerts.begin() + 3, expVerts.end());
   expVariant.insert(expVariant.end(), expUVs.begin(), expUVs.end());
   expVariant.insert(expVariant.end(), expFaces.begin(), expFaces.end());
-
   size_t sumSize
     = expVerts.size() + expNormals.size() + expUVs.size() + expFaces.size();
   ASSERT_EQ(expVariant.size(), sumSize);
 
-  {
-    auto data = ObjParser::parseAsVariant(
-      MIXED_ALL_FEATURES.begin(), MIXED_ALL_FEATURES.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
+  performTestVariant(MIXED_ALL_FEATURES, expVariant);
 
-    ASSERT_EQ(expVariant.size(), data->size());
-    int i = 0;
-    for (auto& actual : *data)
-    {
-      EXPECT_EQ(expVariant[i++], actual);
-    }
-  }
+  // Aggregate Test
+  ObjParser::ObjAggregate expected;
+  expected.positions = expVerts;
+  expected.normals   = expNormals;
+  expected.texCoords = expUVs;
+  expected.faces     = expFaces;
 
-  {
-    auto data = ObjParser::parseAsAggregate(
-      MIXED_ALL_FEATURES.begin(), MIXED_ALL_FEATURES.end());
-    ASSERT_TRUE(data.has_value()) << "Failed to parse";
-
-    ASSERT_EQ(expVerts.size(), data->positions.size());
-    int i = 0;
-    for (auto& actual : data->positions)
-    {
-      EXPECT_EQ(expVerts[i++], actual);
-    }
-
-    ASSERT_EQ(expNormals.size(), data->normals.size());
-    i = 0;
-    for (auto& actual : data->normals)
-    {
-      EXPECT_EQ(expNormals[i++], actual);
-    }
-
-    ASSERT_EQ(expUVs.size(), data->texCoords.size());
-    i = 0;
-    for (auto& actual : data->texCoords)
-    {
-      EXPECT_EQ(expUVs[i++], actual);
-    }
-
-    ASSERT_EQ(expFaces.size(), data->faces.size());
-    i = 0;
-    for (auto& actual : data->faces)
-    {
-      EXPECT_EQ(expFaces[i++], actual);
-    }
-  }
+  performTestAggregate(MIXED_ALL_FEATURES, expected);
 }
 //------------------------------------------------------------------------------
