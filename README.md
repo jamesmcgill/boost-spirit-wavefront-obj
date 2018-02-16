@@ -1,6 +1,6 @@
 # boost-spirit-wavefront-obj
 
-[![Build Status](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj.svg?branch=master)](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj)  
+[![Build Status](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj.svg?branch=master)](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj)  [![Build status](https://ci.appveyor.com/api/projects/status/5nnfjq0yk9i42hav?svg=true)](https://ci.appveyor.com/project/jamesmcgill/boost-spirit-wavefront-obj)  
 
 CMake project that uses Boost Spirit to parse Wavefront Obj model files  
 Includes GTest powered unit tests  
@@ -25,10 +25,10 @@ or
    `cmake --build .`  
 
 ## Requirements:
-+ A compiler with some C++ 17 support (at least <string_view>)  
-    Tested on VS 2017 15.5 and GCC 7.1 
++ A compiler with some C++ 17 support (at least <string_view>, <optional>)  
+    (Tested on VS 2017 15.5 and GCC 7.1) 
 
-+ CMake 3.10 or above
++ CMake 3.9.2 or higher
 
 + Boost  
-    Tested GCC with v1.58, MSVC with v1.66 
+    (v1.55 tested on GCC. v1.66 tested on MSVC) 
