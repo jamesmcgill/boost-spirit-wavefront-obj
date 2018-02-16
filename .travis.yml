@@ -7,7 +7,7 @@ sudo: false
 language: cpp
 
 script:
-  - cmake . -DCMAKE_CXX_COMPILER=g++-7.1
+  - cmake . -DCMAKE_CXX_COMPILER=g++-7
   - cmake --build .
 
 # For sudo=false builds this section installs the necessary dependencies.
@@ -20,7 +20,7 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - g++-7.1
+    - g++-7
 
 notifications:
   email: false
