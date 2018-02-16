@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.9.2)
 project (ObjParser VERSION 0.0.1 DESCRIPTION "wavefront obj loader")
 
 find_package(Boost 1.66.0)

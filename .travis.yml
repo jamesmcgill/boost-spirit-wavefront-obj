@@ -3,11 +3,14 @@
 # This file can be validated on:
 # http://lint.travis-ci.org/
 
+dist: trusty
 sudo: false
+
 language: cpp
+compiler: gcc
 
 script:
-  - cmake . -DCMAKE_CXX_COMPILER=g++-7
+  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake
   - cmake --build .
 
 # For sudo=false builds this section installs the necessary dependencies.
@@ -21,6 +24,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-7
+    - libboost-all-dev
 
 notifications:
   email: false
