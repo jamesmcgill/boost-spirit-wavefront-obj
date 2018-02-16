@@ -13,4 +13,4 @@ build_script:
 test_script:
   - echo %APPVEYOR_BUILD_FOLDER%
   - echo %CONFIGURATION%
-  - %APPVEYOR_BUILD_FOLDER%\%CONFIGURATION%\tests.exe
+  - c:\projects\source\build\debug\tests.exe
