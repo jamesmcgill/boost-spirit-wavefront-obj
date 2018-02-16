@@ -1,5 +1,6 @@
 #pragma once
 
+#define BOOST_SPIRIT_USE_PHOENIX_V3
 #include <boost/config/warning_disable.hpp>
 #include <boost/variant.hpp>
 #include <boost/spirit/include/qi.hpp>
