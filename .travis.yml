@@ -9,10 +9,17 @@ sudo: false
 language: cpp
 compiler: gcc
 
+before_install:
+  - pip install --user cpp-coveralls
+
 script:
   - mkdir build && cd build
-  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake ..
+  - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -DCOVERAGE=1 ..
   - cmake --build .
+  - ./tests
+
+after_success:
+  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
 
 # For sudo=false builds this section installs the necessary dependencies.
 addons:
