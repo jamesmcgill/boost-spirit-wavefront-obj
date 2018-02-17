@@ -19,7 +19,7 @@ script:
   - ./tests
 
 after_success:
-  - coveralls --gcov /usr/bin/gcov-7 --root .. --exclude third_party -E ".*gtest.*" -E ".*CMakeFiles.*"
+  - coveralls --gcov /usr/bin/gcov-7 --root .. --exclude third_party --exclude source/fmt --exclude source/tiny_obj_loader.h --exclude source/main.cpp -E ".*gtest.*" -E ".*CMakeFiles.*"
 
 # For sudo=false builds this section installs the necessary dependencies.
 addons:
