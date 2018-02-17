@@ -12,8 +12,8 @@
 #include "tiny_obj_loader.h"
 
 //------------------------------------------------------------------------------
-#ifndef __WIN32
-#define UNREFERENCED_PARAMETER(P) (P)
+#ifndef UNREFERENCED_PARAMETER
+# define UNREFERENCED_PARAMETER(P) (void)(P)
 #endif
 
 constexpr bool printFullData = false;
@@ -179,6 +179,7 @@ main()
 {
   static const char* TEST_FILE   = "assets/test.obj";
   static const char* DRAGON_FILE = "assets/dragon_vrip_res3.obj";
+  UNREFERENCED_PARAMETER(DRAGON_FILE);
 
   {
     auto start = std::chrono::high_resolution_clock::now();

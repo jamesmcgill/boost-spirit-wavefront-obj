@@ -140,7 +140,7 @@ logMsgImp(
   ASSERT(count >= 0);
 
   // Add the message
-  int startIdx = (count >= 0) ? count : 0;
+  size_t startIdx = (count >= 0) ? static_cast<size_t>(count) : 0;
   if (startIdx >= BUFFER_SIZE)
   {
     ASSERT(false);
@@ -151,7 +151,7 @@ logMsgImp(
   ASSERT(count >= 0);
 
   // Add newline
-  startIdx = (count >= 0) ? startIdx + count : startIdx;
+  startIdx = (count >= 0) ? startIdx + static_cast<size_t>(count) : startIdx;
   if (startIdx >= BUFFER_SIZE)
   {
     ASSERT(false);

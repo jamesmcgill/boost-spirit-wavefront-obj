@@ -305,6 +305,8 @@ parseObj(Iterator first, Iterator last, Data& data)
   {
     LOG_ERROR("misc exception\n");
   }
+
+  return false;
 }
 
 //------------------------------------------------------------------------------
