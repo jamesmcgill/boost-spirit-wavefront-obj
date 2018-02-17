@@ -5,14 +5,8 @@
 
 #include "TestFixture.h"
 
-//------------------------------------------------------------------------------
-int
-main(int argc, char** argv)
+namespace
 {
-  ::testing::InitGoogleMock(&argc, argv);
-  return RUN_ALL_TESTS();
-}
-
 //------------------------------------------------------------------------------
 TEST_F(TestFixture, SingleSimpleVertex)
 {
@@ -75,6 +69,7 @@ vn  0.03080499917268753 0.0559782013297081 -0.04991229996085167
   performTestVariant(NORMALS_LIST, expected);
   performTestAggregate(NORMALS_LIST, agg);
 }
+
 //------------------------------------------------------------------------------
 TEST_F(TestFixture, UVList)
 {
@@ -123,6 +118,7 @@ f  11/11/11 12/12/12 2/2/2
   performTestVariant(FACE_LIST, expected);
   performTestAggregate(FACE_LIST, agg);
 }
+
 //------------------------------------------------------------------------------
 TEST_F(TestFixture, AllFeatures)
 {
@@ -193,4 +189,16 @@ f  8/8 6/6 9/9
 
   performTestAggregate(MIXED_ALL_FEATURES, expected);
 }
+
+//------------------------------------------------------------------------------
+}    // namespace
+
+//------------------------------------------------------------------------------
+int
+main(int argc, char** argv)
+{
+  ::testing::InitGoogleMock(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+
 //------------------------------------------------------------------------------
