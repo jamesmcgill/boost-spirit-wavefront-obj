@@ -1,6 +1,6 @@
 # boost-spirit-wavefront-obj
 
-[![Build Status](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj.svg?branch=master)](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj)  [![Build status](https://ci.appveyor.com/api/projects/status/5nnfjq0yk9i42hav?svg=true)](https://ci.appveyor.com/project/jamesmcgill/boost-spirit-wavefront-obj)  
+[![Build Status](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj.svg?branch=master)](https://travis-ci.org/jamesmcgill/boost-spirit-wavefront-obj)  [![Build status](https://ci.appveyor.com/api/projects/status/5nnfjq0yk9i42hav?svg=true)](https://ci.appveyor.com/project/jamesmcgill/boost-spirit-wavefront-obj)  [![Coverage Status](https://coveralls.io/repos/github/jamesmcgill/boost-spirit-wavefront-obj/badge.svg?branch=master)](https://coveralls.io/github/jamesmcgill/boost-spirit-wavefront-obj?branch=master)  
 
 CMake project that uses Boost Spirit to parse Wavefront Obj model files  
 Includes GTest powered unit tests  
