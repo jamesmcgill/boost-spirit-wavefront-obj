@@ -197,10 +197,9 @@ TEST_F(TestFixture, InvalidData)
 abc  0.03264300152659416 0.056147500872612 -0.04995829984545708
 )obj";
 
-  const std::vector<ObjParser::VertexPosition> expected
-    = {{0.03264300152659416, 0.056147500872612, -0.04995829984545708}};
-
-  performTestVariant(VERTEX_SIMPLE_SINGLE, expected);
+  auto data = ObjParser::parseAsVariant(
+    VERTEX_SIMPLE_SINGLE.begin(), VERTEX_SIMPLE_SINGLE.end());
+  ASSERT_FALSE(data.has_value()) << "Parsing should fail";
 }
 
 //------------------------------------------------------------------------------
