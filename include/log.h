@@ -125,7 +125,7 @@ static const size_t BUFFER_SIZE = 12 * 1024;
 static char buffer[BUFFER_SIZE];
 
 //------------------------------------------------------------------------------
-void printBuffer()
+static void printBuffer()
 {
   std::cout << buffer;
   #if defined(_WIN32) && defined(_DEBUG)
@@ -512,7 +512,7 @@ _LOG_MESSAGE_IMPL("FATAL", __VA_ARGS__);                                       \
 #undef ENABLE_TRACE_LOG
 
 //------------------------------------------------------------------------------
-#ifdef LOGGER_PROFILE_IMPLEMENTATION
+#ifdef LOGGER_PROFILER_IMPLEMENTATION
 
 #ifndef _WIN32
 #include <chrono>
@@ -807,4 +807,4 @@ createTimedRecordHash(const std::string_view& filePath, const int lineNumber)
 //------------------------------------------------------------------------------
 }    // namespace logger
 
-#endif    // LOGGER_IMPLEMENTATION
+#endif    // LOGGER_PROFILER_IMPLEMENTATION
