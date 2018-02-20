@@ -286,12 +286,12 @@ parseObj(Iterator first, Iterator last, Data& data)
     using boost::spirit::qi::space;
     if (!qi::phrase_parse(first, last, parser, skipper, data))
     {
-      LOG_ERROR("parse failed: %s\n", std::string(first, last).c_str());
+      LOG_ERROR("parse failed: %s", std::string(first, last).c_str());
       return false;
     }
     if (first != last)
     {
-      LOG_ERROR("unparsed: %s\n", std::string(first, last).c_str());
+      LOG_ERROR("unparsed: %s", std::string(first, last).c_str());
       return false;
     }
     return true;
@@ -299,11 +299,11 @@ parseObj(Iterator first, Iterator last, Data& data)
   catch (const qi::expectation_failure<Iterator>& e)
   {
     LOG_ERROR(
-      "parse exception: %s %s\n", e.what(), std::string(first, last).c_str());
+      "parse exception: %s %s", e.what(), std::string(first, last).c_str());
   }
   catch (...)
   {
-    LOG_ERROR("misc exception\n");
+    LOG_ERROR("misc exception");
   }
 
   return false;

@@ -23,7 +23,7 @@ void
 printVariant(const ObjParser::ObjVariantVec& lines)
 {
   LOG_INFO("-------------------------");
-  LOG_INFO("VARIANT: Parsed %u entries", lines.size());
+  LOG_INFO("VARIANT: Parsed %zu entries", lines.size());
   LOG_INFO("-------------------------");
 
   if (!printFullData)
@@ -45,7 +45,7 @@ printAggregate(const ObjParser::ObjAggregate& data)
 {
   LOG_INFO("-------------------------");
   LOG_INFO(
-    "AGGREGATE: Parsed %u vertices, %u normals, %u uvs, %u faces",
+    "AGGREGATE: Parsed %zu vertices, %zu normals, %zu uvs, %zu faces",
     data.positions.size(),
     data.normals.size(),
     data.texCoords.size(),
@@ -93,7 +93,7 @@ printSuccess(const char* type, std::chrono::nanoseconds::rep elapsed)
   LOG_INFO("-------------------------");
   LOG_INFO("%s Parsing succeeded in %fms", type, elapsed / 1000000.0f);
   LOG_INFO("-------------------------");
-};
+}
 
 //------------------------------------------------------------------------------
 void
@@ -102,7 +102,7 @@ printFailure(const char* type)
   LOG_INFO("-------------------------");
   LOG_INFO("%s Parsing failed", type);
   LOG_INFO("-------------------------");
-};
+}
 
 //------------------------------------------------------------------------------
 bool
@@ -122,7 +122,7 @@ loadWithTinyObj(
 
   if (!err.empty())
   {
-    LOG_ERROR(err.c_str());
+    LOG_ERROR("%s", err.c_str());
   }
 
   return ret;
@@ -139,7 +139,7 @@ printTinyObj(
 
   LOG_INFO("-------------------------");
   LOG_INFO(
-    "TINYOBJ Parsed %u shapes, %u vertices, %u normals, %u uvs,",
+    "TINYOBJ Parsed %zu shapes, %zu vertices, %zu normals, %zu uvs,",
     shapes.size(),
     attrib.vertices.size(),
     attrib.normals.size(),
@@ -181,6 +181,7 @@ main()
   static const char* DRAGON_FILE = "assets/dragon_vrip_res3.obj";
   UNREFERENCED_PARAMETER(DRAGON_FILE);
 
+  int ret = 0;
   {
     auto start = std::chrono::high_resolution_clock::now();
     if (auto data = ObjParser::loadAsVariant(std::string(TEST_FILE)))
@@ -192,6 +193,7 @@ main()
     else
     {
       printFailure("VARIANT");
+      ret = -1;
     }
   }
 
@@ -206,6 +208,7 @@ main()
     else
     {
       printFailure("AGGREGATE");
+      ret = -1;
     }
   }
 
@@ -224,6 +227,7 @@ main()
     else
     {
       printFailure("TINYOBJ");
+      ret = -1;
     }
   }
 
@@ -260,6 +264,11 @@ f  10//10 8//8 9//9
       printVariant(*data);
       printSuccess("VARIANT", elapsed.count());
     }
+    else
+    {
+      printFailure("VARIANT");
+      ret = -1;
+    }
   }
 
   {
@@ -272,9 +281,14 @@ f  10//10 8//8 9//9
       printAggregate(*data);
       printSuccess("AGGREGATE", elapsed.count());
     }
+    else
+    {
+      printFailure("AGGREGATE");
+      ret = -1;
+    }
   }
 
-  return 0;
+  return ret;
 }
 
 //------------------------------------------------------------------------------
