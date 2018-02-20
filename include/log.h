@@ -1,7 +1,12 @@
 //------------------------------------------------------------------------------
 // Very Basic Logging and profiler
 //
-// Profiling is NOT thread-safe ( see printBuffer() )
+// NOT thread-safe ( see printBuffer() )
+//
+// Usage: (in one cpp file only and only if profiler support is required)
+//
+//  #define LOGGER_PROFILER_IMPLEMENTATION
+//  #include "log.h"
 //
 //------------------------------------------------------------------------------
 // TRACE
@@ -33,13 +38,6 @@
 // LOG_ERROR_IF
 // LOG_FATAL_ERROR
 // LOG_FATAL_ERROR_IF
-//------------------------------------------------------------------------------
-//
-// Usage: (in one cpp file only and only if profiler support is required)
-//
-//  #define LOGGER_PROFILER_IMPLEMENTATION
-//  #include "log.h"
-//
 //------------------------------------------------------------------------------
 #pragma once
 
