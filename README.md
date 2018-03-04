@@ -11,8 +11,7 @@ e.g. `vcpkg install boost`
 or  
 `sudo apt-get install libboost-all-dev`  
 + On Windows run the provided `build.bat` file   
-   Note: the file `build-generate.bat` currently contains a hardcoded path: `set VCPKG_PATH="S:\tools\vcpkg\\"`  
-   Either change the path to point to your vcpkg installation or remove usages of the path if not using vcpkg.  
+   Note: if you are using vcpkg, set the environment variable VCPKG_PATH to the root location of your vcpkg installation (see build-generate.bat).    
    
 + Or type the following commands:  
    `mkdir build && cd build`  
