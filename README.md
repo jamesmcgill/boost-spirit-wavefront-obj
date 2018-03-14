@@ -10,8 +10,11 @@ Includes GTest powered unit tests
 e.g. `vcpkg install boost`  
 or  
 `sudo apt-get install libboost-all-dev`  
+
 + On Windows run the provided `build.bat` file   
    Note: if you are using vcpkg, set the environment variable VCPKG_PATH to the root location of your vcpkg installation (see build-generate.bat).    
+   
++ On gnu tools run `build.sh`  
    
 + Or type the following commands:  
    `mkdir build && cd build`  
